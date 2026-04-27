@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="MacBook-Air-Maria-8.local" name="CheckAreaShapeTest" skipped="0" tests="4" time="0.034" timestamp="2026-04-27T21:37:20">
+<testsuite errors="0" failures="0" hostname="MacBook-Air-Maria-8.local" name="CheckAreaShapeTest" skipped="0" tests="4" time="0.036" timestamp="2026-04-27T21:41:51">
   <properties>
     <property name="ant.library.dir" value="/opt/homebrew/Cellar/ant/1.10.17/libexec/lib" />
     <property name="java.specification.version" value="25" />
     <property name="ant.project.name" value="WEB_LAB3" />
-    <property name="sun.jnu.encoding" value="UTF-8" />
     <property name="idea.dir" value=".idea" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
     <property name="server.pwd" value="****" />
     <property name="sun.arch.data.model" value="64" />
     <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues" />
@@ -13,8 +13,8 @@
     <property name="env.java.home.2" value="/Users/maria/Library/Java/JavaVirtualMachines/ms-21.0.9/Contents/Home" />
     <property name="env.java.home.1" value="/Users/maria/Library/Java/JavaVirtualMachines/ms-17.0.16/Contents/Home" />
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/25.0.2/libexec/openjdk.jdk/Contents/Home/lib" />
-    <property name="sun.java.command" value="org.apache.tools.ant.launch.Launcher -cp  -lib /opt/homebrew/share/ant report" />
     <property name="test.classes.dir" value="ant/build/test-classes" />
+    <property name="sun.java.command" value="org.apache.tools.ant.launch.Launcher -cp  -lib /opt/homebrew/share/ant report" />
     <property name="jdk.debug" value="release" />
     <property name="java.specification.vendor" value="Oracle Corporation" />
     <property name="java.version.date" value="2026-01-20" />
@@ -32,8 +32,8 @@
     <property name="ant.resources" value="ant-resources" />
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
     <property name="java.runtime.version" value="25.0.2" />
-    <property name="ant.file.WEB_LAB3" value="/Users/maria/IdeaProjects/OPI_LAB3/build.xml" />
     <property name="alt.token.class1.new" value="CoordValidationAlt" />
+    <property name="ant.file.WEB_LAB3" value="/Users/maria/IdeaProjects/OPI_LAB3/build.xml" />
     <property name="user.name" value="maria" />
     <property name="params.file" value="ant-resources/parameters.properties" />
     <property name="file.encoding" value="UTF-8" />
@@ -41,8 +41,8 @@
     <property name="server.port" value="2222" />
     <property name="java.vendor.version" value="Homebrew" />
     <property name="build.dir" value="ant/build" />
-    <property name="server.host" value="se.ifmo.ru" />
     <property name="java.io.tmpdir" value="/var/folders/88/qzfcm68j7bq0gjjt7hz48jyr0000gn/T/" />
+    <property name="server.host" value="se.ifmo.ru" />
     <property name="java.version" value="25.0.2" />
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
     <property name="ant.dir" value="ant" />
@@ -54,8 +54,8 @@
     <property name="native.encoding" value="UTF-8" />
     <property name="ant.version" value="Apache Ant(TM) version 1.10.17 compiled on April 6 2026" />
     <property name="java.library.path" value="/Users/maria/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
-    <property name="java.vendor" value="Homebrew" />
     <property name="stderr.encoding" value="UTF-8" />
+    <property name="java.vendor" value="Homebrew" />
     <property name="classes.dir" value="ant/build/classes" />
     <property name="sun.io.unicode.encoding" value="UnicodeBig" />
     <property name="native2ascii.dir" value="ant/native2ascii" />
@@ -64,8 +64,8 @@
     <property name="ant.file.type" value="file" />
     <property name="java.class.path" value="/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-launcher.jar:/opt/homebrew/share/ant:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-commons-net.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-xz.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-junit4.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-jai.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-apache-resolver.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-jdepend.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-apache-regexp.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-apache-log4j.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-javamail.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-apache-bcel.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-netrexx.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-swing.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-jsch.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-junitlauncher.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-jakartamail.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ivy-2.5.3.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-junit.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-imageio.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-launcher.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-antlr.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-testutil.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-apache-oro.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/jsch-0.1.55.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/bcel-6.12.0.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-jmf.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-apache-xalan2.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-apache-bsf.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/jython-standalone-2.7.3.jar:/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant-commons-logging.jar" />
     <property name="java.vm.vendor" value="Homebrew" />
-    <property name="java.vm.specification.version" value="25" />
     <property name="os.name" value="Mac OS X" />
+    <property name="java.vm.specification.version" value="25" />
     <property name="user.country" value="RU" />
     <property name="sun.java.launcher" value="SUN_STANDARD" />
     <property name="main.class" value="org.wineeenottt.Main" />
@@ -89,13 +89,12 @@
     <property name="stdout.encoding" value="UTF-8" />
     <property name="path.separator" value=":" />
     <property name="os.version" value="26.2" />
-    <property name="gradle.cache.dir" value=".gradle" />
     <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
+    <property name="gradle.cache.dir" value=".gradle" />
     <property name="ant.project.invoked-targets" value="report" />
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM" />
     <property name="history.dir" value="ant/history" />
     <property name="alt.token.class2.new" value="CheckAreaShapeAlt" />
-    <property name="report.dir" value="ant/report" />
     <property name="alt.build.dir" value="ant/alt/build" />
     <property name="ant.core.lib" value="/opt/homebrew/Cellar/ant/1.10.17/libexec/lib/ant.jar" />
     <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues" />
@@ -111,8 +110,8 @@
     <property name="src.dir" value="src/main" />
     <property name="ant.project.default-target" value="build" />
   </properties>
-  <testcase classname="CheckAreaShapeTest" name="fullCheck" time="0.008" />
-  <testcase classname="CheckAreaShapeTest" name="rectangleHit" time="0.001" />
+  <testcase classname="CheckAreaShapeTest" name="fullCheck" time="0.009" />
+  <testcase classname="CheckAreaShapeTest" name="rectangleHit" time="0.0" />
   <testcase classname="CheckAreaShapeTest" name="circleMiss" time="0.0" />
   <testcase classname="CheckAreaShapeTest" name="triangleHit" time="0.0" />
   <system-out><![CDATA[]]></system-out>
