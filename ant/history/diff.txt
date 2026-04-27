@@ -1,0 +1,16 @@
+diff --git a/src/main/java/org/wineeenottt/Main.java b/src/main/java/org/wineeenottt/Main.java
+index 8dec8e5..6c2da1e 100644
+--- a/src/main/java/org/wineeenottt/Main.java
++++ b/src/main/java/org/wineeenottt/Main.java
+@@ -2,8 +2,8 @@ package org.wineeenottt;
+ 
+ public class Main {
+     public static void main(String[] args) {
+-        System.out.println("Hello, World)");
+-//        int x = ;
++//        System.out.println("Hello, World)");
++        int x =
+ 
+     }
+ }
+\ No newline at end of file
