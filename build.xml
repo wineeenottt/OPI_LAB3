@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="WEB_LAB3" default="build">
+
+    <property file="build.properties"/>
+
+    <!--Импорт библиотек-->
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+    </path>
+
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="${contrib}"/>
+        </classpath>
+    </taskdef>
+
+
+    <!--1. Compile -->
+    <!-- компиляция исходных кодов проекта -->
+    <target name="compile">
+        <echo message="***** COMPILE STARTED *****"/>
+
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${main.dir}" destdir="${classes.dir}" includeantruntime="false" failonerror="true">
+            <classpath refid="classpath" />
+        </javac>
+
+        <echo message="***** COMPILE COMPLETED *****"/>
+    </target>
+
+
+    <!--2. Build -->
+    <!-- компиляция (compile) исходных кодов проекта и их упаковка в исполняемый jar-архив -->
+    <target name="build" depends="compile">
+        <echo message="***** BUILD STARTED *****"/>
+
+        <copy todir="${classes.dir}">
+            <fileset dir="${resources.dir}"/>
+        </copy>
+
+        <mkdir dir="${ant.lib.dir}"/>
+        <copy todir="${ant.lib.dir}">
+            <fileset dir="${lib.dir}">
+                <include name="*.jar"/>
+                <exclude name="ant*.jar"/>
+            </fileset>
+        </copy>
+
+        <jar destfile="${ant.dir}/${jar.name}">
+            <fileset dir="${classes.dir}"/>
+            <manifest>
+                <attribute name="Manifest-Version" value="${manif.version}"/>
+                <attribute name="Created-By" value="wineeenottt"/>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Implementation-Version" value="${version}"/>
+                <attribute name="Class-Path" value="lib/"/>
+            </manifest>
+        </jar>
+
+        <echo message="***** BUILD COMPLETED *****"/>
+    </target>
+
+
+    <!--3. Clean -->
+    <!-- удаление скомпилированных классов проекта и всех временных файлов -->
+    <target name="clean">
+        <echo message="***** CLEAN STARTED *****"/>
+
+        <delete dir="${build.dir}"/>
+        <delete dir="${ant.lib.dir}"/>
+        <delete dir="${test.classes.dir}"/>
+        <delete dir="${doc.dir}"/>
+        <delete dir="${rev.dir}"/>
+        <delete dir="${history.dir}"/>
+
+        <echo message="***** CLEAN COMPLETED *****"/>
+    </target>
+
+
+    <!--4. Test -->
+    <!-- запуск junit-тестов проекта, после сборки build -->
+    <target name="test" depends="build">
+        <echo message="***** TEST STARTED *****"/>
+
+        <delete dir="${test.classes.dir}"/>
+        <mkdir dir="${test.classes.dir}"/>
+
+        <javac srcdir="${test.dir}" destdir="${test.classes.dir}" includeantruntime="false">
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement location="${classes.dir}"/>
+            </classpath>
+        </javac>
+
+        <delete dir="${test.report.dir}"/>
+        <mkdir dir="${test.report.dir}"/>
+
+        <junit printsummary="yes" haltonfailure="true">
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement location="${classes.dir}"/>
+                <pathelement location="${test.classes.dir}"/>
+            </classpath>
+
+            <formatter type="xml"/>
+
+            <batchtest todir="${test.report.dir}">
+                <fileset dir="${test.classes.dir}" includes="**/*Test.class"/>
+            </batchtest>
+        </junit>
+
+        <echo message="***** TEST COMPLETED *****"/>
+    </target>
+
+
+    <!--5. Doc -->
+    <!-- добавление в MANIFEST.MF MD5 и SHA-1 файлов проекта,
+    а также генерация и добавление в архив javadoc по всем классам проекта -->
+    <target name="doc" depends="build">
+        <echo message="***** DOC STARTED *****"/>
+
+        <delete dir="${hash.dir}"/>
+        <mkdir dir="${hash.dir}"/>
+
+        <checksum algorithm="MD5" todir="${hash.dir}"
+                  totalproperty="project.md5">
+            <fileset dir="${src.dir}"/>
+        </checksum>
+
+        <checksum algorithm="SHA1" todir="${hash.dir}"
+                  totalproperty="project.sha1">
+            <fileset dir="${src.dir}"/>
+        </checksum>
+
+        <delete dir="${doc.dir}"/>
+        <mkdir dir="${doc.dir}"/>
+
+        <javadoc sourcepath="${main.dir}" destdir="${doc.dir}"  use="true" version="true">
+            <classpath refid="classpath"/>
+        </javadoc>
+
+        <jar destfile="${ant.dir}/${jar.name}" update="true">
+            <zipfileset dir="${doc.dir}" prefix="javadoc"/>
+            <manifest>
+                <attribute name="MD5" value="${project.md5}"/>
+                <attribute name="SHA-1" value="${project.sha1}"/>
+            </manifest>
+        </jar>
+        <delete dir="${hash.dir}"/>
+
+        <echo message="***** DOC COMPLETED *****"/>
+    </target>
+
+
+    <!--6. Xml -->
+    <!-- валидация всех xml-файлов в проекте -->
+    <target name="xml">
+        <echo message="***** XML STARTED *****"/>
+
+        <xmlvalidate lenient="true">
+            <fileset dir="./" includes="**/*.xml">
+                <exclude name="${idea.dir}/**"/>
+                <exclude name="${build.dir.gradle}/**"/>
+                <exclude name="${lib.dir}/**"/>
+                <exclude name="${ant.dir}/**"/>
+                <exclude name="${gradle.cache.dir}"/>
+                <exclude name="${gradle.wrapper.dir}"/>
+            </fileset>
+        </xmlvalidate>
+
+        <echo message="***** XML COMPLETED *****"/>
+    </target>
+
+
+    <!--7. Music -->
+    <!-- воспроизведение музыки по завершению сборки (цель build) -->
+    <target name="music" depends="build">
+        <echo message="***** MUSIC STARTED *****"/>
+
+        <exec executable="afplay">
+            <arg value="${music.file}"/>
+        </exec>
+
+        <echo message="***** MUSIC COMPLETED *****"/>
+    </target>
+
+
+    <!--8. Scp -->
+    <!-- перемещение собранного проекта по scp
+    на выбранный сервер по завершению сборки (цель build)-->
+    <target name="scp" depends="build">
+        <echo message="***** SCP STARTED *****"/>
+
+        <scp file="${ant.dir}/${jar.name}"
+             port="${server.port}"
+             todir="${server.user}:${server.pwd}@${server.host}:${server.path}"
+             trust="true"/>
+
+        <echo message="***** SCP COMPLETED *****"/>
+    </target>
+
+
+    <!--9. Native2ascii -->
+    <!-- преобразование native2ascii для копий файлов локализации -->
+    <target name="native2ascii">
+        <echo message="***** NATIVE2ASCII STARTED *****"/>
+        <mkdir dir="${native2ascii.dir}"/>
+        <native2ascii src="${resources.dir}"
+                      dest="${native2ascii.dir}"
+                      includes="**/*.properties"/>
+        <echo message="***** NATIVE2ASCII COMPLETED *****"/>
+    </target>
+
+
+    <!--10. Alt -->
+    <!-- создаёт альтернативную версию программы с измененными именами переменных и классов -->
+    <target name="alt">
+        <echo message="***** ALT STARTED *****"/>
+
+        <delete dir="${alt.dir}"/>
+        <mkdir dir="${alt.src.dir}"/>
+        <mkdir dir="${alt.classes.dir}" />
+
+        <copy todir="${alt.src.dir}">
+            <fileset dir="${main.dir}" includes="**/*.java"/>
+        </copy>
+
+        <replace dir="${alt.src.dir}" includes="**/*.java">
+            <replacefilter token="${alt.token.class1.old}" value="${alt.token.class1.new}" />
+            <replacefilter token="${alt.token.class2.old}" value="${alt.token.class2.new}" />
+        </replace>
+
+        <move file="${alt.src.dir}/org/wineeenottt/utility/${alt.token.class1.old}.java"
+              tofile="${alt.src.dir}/org/wineeenottt/utility/${alt.token.class1.new}.java"
+              failonerror="false"/>
+
+        <move file="${alt.src.dir}/org/wineeenottt/utility/${alt.token.class2.old}.java"
+              tofile="${alt.src.dir}/org/wineeenottt/utility/${alt.token.class2.new}.java"
+              failonerror="false"/>
+
+        <mkdir dir="${alt.build.dir}"/>
+        <antcall target="build">
+            <param name="main.dir" value="${alt.src.dir}" />
+            <param name="classes.dir" value="${alt.classes.dir}" />
+            <param name="build.dir" value="${alt.dir}/build" />
+            <param name="ant.dir" value="${alt.dir}" />
+            <param name="jar.name" value="${ant.project.name}-alt-${version}.jar" />
+        </antcall>
+
+        <delete dir="${alt.build.dir}"/>
+        <delete dir="${alt.src.dir}"/>
+
+        <echo message="***** ALT COMPLETED *****"/>
+    </target>
+
+    <!--11. Report -->
+    <!-- в случае успешного прохождения тестов сохраняет отчет junit в формате xml,
+    добавляет его в репозиторий git и выполняет commit -->
+    <target name="report" depends="test">
+        <echo message="***** REPORT STARTED *****"/>
+
+        <exec executable="git">
+            <arg value="add"/>
+            <arg value="${report.dir}"/>
+        </exec>
+
+        <exec executable="git">
+            <arg value="commit"/>
+            <arg value="-m"/>
+            <arg value="test-report"/>
+        </exec>
+
+        <echo message="***** REPORT COMPLETED *****"/>
+    </target>
+
+
+    <!--12. Diff -->
+    <!-- осуществляет проверку состояния рабочей копии,
+    и, если изменения не касаются классов, указанных в файле параметров
+    выполняет commit в репозиторий svn -->
+    <target name="diff">
+        <echo message="***** DIFF STARTED *****"/>
+
+        <loadproperties srcFile="${params.file}"/>
+
+        <exec executable="svn" outputproperty="diff.output" failonerror="true">
+            <arg value="status"/>
+        </exec>
+
+        <echo message="Changed files:${line.separator}${diff.output}"/>
+
+        <condition property="has.forbidden.changes">
+            <or>
+                <contains string="${diff.output}" substring="${class1}"/>
+                <contains string="${diff.output}" substring="${class2}"/>
+            </or>
+        </condition>
+
+        <if>
+            <isset property="has.forbidden.changes"/>
+            <then>
+                <echo message="*** COMMIT SKIPPED: forbidden classes were modified ***"/>
+            </then>
+            <else>
+                <echo message="*** COMMITTING: forbidden classes no change ***"/>
+                <exec executable="svn" failonerror="true">
+                    <arg value="add"/>
+                    <arg value="."/>
+                </exec>
+                <exec executable="svn" failonerror="true">
+                    <arg value="commit"/>
+                    <arg value="-m"/>
+                    <arg value="auto commit"/>
+                </exec>
+            </else>
+        </if>
+
+        <echo message="***** DIFF COMPLETED *****"/>
+    </target>
+
+
+    <!--13. Team -->
+    <!-- осуществляет получение из svn-репозитория 3 предыдущих ревизий,
+    их сборку и упаковку получившихся jar-файлов в zip-архив.
+    Сборку реализовать посредством вызова цели build -->
+    <target name="team">
+        <echo message="***** TEAM STARTED *****"/>
+
+        <exec executable="svn" outputproperty="svn.revision" failonerror="true">
+            <arg value="info"/>
+            <arg value="--show-item"/>
+            <arg value="revision"/>
+        </exec>
+
+        <math result="svn.rev1" operand1="${svn.revision}" operation="-" operand2="1" datatype="int"/>
+        <math result="svn.rev2" operand1="${svn.revision}" operation="-" operand2="2" datatype="int"/>
+        <math result="svn.rev3" operand1="${svn.revision}" operation="-" operand2="3" datatype="int"/>
+
+        <echo message="Current revision: ${svn.revision}"/>
+        <echo message="Checking out: ${svn.rev1}, ${svn.rev2}, ${svn.rev3}"/>
+
+        <delete dir="${rev.dir}"/>
+        <mkdir dir="${rev.dir}"/>
+
+        <exec executable="svn" failonerror="true">
+            <arg value="checkout"/>
+            <arg value="-r"/>
+            <arg value="${svn.rev1}"/>
+            <arg value="${svn.url}"/>
+            <arg value="${rev.dir}/rev${svn.rev1}"/>
+        </exec>
+
+        <exec executable="svn" failonerror="true">
+            <arg value="checkout"/>
+            <arg value="-r"/>
+            <arg value="${svn.rev2}"/>
+            <arg value="${svn.url}"/>
+            <arg value="${rev.dir}/rev${svn.rev2}"/>
+        </exec>
+
+        <exec executable="svn" failonerror="true">
+            <arg value="checkout"/>
+            <arg value="-r"/>
+            <arg value="${svn.rev3}"/>
+            <arg value="${svn.url}"/>
+            <arg value="${rev.dir}/rev${svn.rev3}"/>
+        </exec>
+
+        <ant dir="${rev.dir}/rev${svn.rev1}/trunk" target="build" inheritAll="false"/>
+        <ant dir="${rev.dir}/rev${svn.rev2}/trunk" target="build" inheritAll="false"/>
+        <ant dir="${rev.dir}/rev${svn.rev3}/trunk" target="build" inheritAll="false"/>
+
+        <zip destfile="${rev.dir}/team-revisions.zip">
+            <fileset dir="${rev.dir}/rev${svn.rev1}" includes="**/*.jar"/>
+            <fileset dir="${rev.dir}/rev${svn.rev2}" includes="**/*.jar"/>
+            <fileset dir="${rev.dir}/rev${svn.rev3}" includes="**/*.jar"/>
+        </zip>
+
+        <delete dir="${rev.dir}/rev${svn.rev1}"/>
+        <delete dir="${rev.dir}/rev${svn.rev2}"/>
+        <delete dir="${rev.dir}/rev${svn.rev3}"/>
+
+        <echo message="***** TEAM COMPLETED *****"/>
+    </target>
+
+
+    <!-- 14. History -->
+    <!-- если проект не удаётся скомпилировать (цель compile), загружается предыдущая версия из репозитория git.
+    Операция повторяется до тех пор, пока проект не удастся собрать, либо не будет получена самая первая ревизия из репозитория.
+    Если такая ревизия найдена, то формируется файл, содержащий результат операции diff для всех файлов, измёненных в ревизии,
+    следующей непосредственно за последней работающей -->
+    <target name="history">
+
+        <echo message="***** HISTORY STARTED *****"/>
+
+        <delete dir="${history.dir}"/>
+        <mkdir dir="${history.dir}"/>
+
+        <exec executable="git">
+            <arg value="stash"/>
+            <arg value="push"/>
+            <arg value="-u"/>
+        </exec>
+
+        <exec executable="git" outputproperty="git.log">
+            <arg value="rev-list"/>
+            <arg value="HEAD"/>
+        </exec>
+
+        <var name="success.rev" value=""/>
+        <var name="broken.rev" value=""/>
+
+        <for list="${git.log}" delimiter="${line.separator}" param="r">
+            <sequential>
+                <if>
+                    <equals arg1="${success.rev}" arg2=""/>
+                    <then>
+                        <exec executable="git">
+                            <arg value="checkout"/>
+                            <arg value="-f"/>
+                            <arg value="@{r}"/>
+                        </exec>
+
+                        <trycatch>
+                            <try>
+                                <antcall target="compile"/>
+                                <var name="success.rev" value="@{r}"/>
+                            </try>
+                            <catch>
+                                <var name="broken.rev" value="@{r}"/>
+                            </catch>
+                        </trycatch>
+                    </then>
+                </if>
+            </sequential>
+        </for>
+
+        <if>
+            <and>
+                <not><equals arg1="${success.rev}" arg2=""/></not>
+                <not><equals arg1="${broken.rev}" arg2=""/></not>
+            </and>
+            <then>
+                <exec executable="git" output="${history.dir}/diff.txt">
+                    <arg value="diff"/>
+                    <arg value="${success.rev}"/>
+                    <arg value="${broken.rev}"/>
+                </exec>
+                <echo message="Working: ${success.rev}"/>
+                <echo message="Broken:  ${broken.rev}"/>
+                <echo message="Diff save"/>
+            </then>
+            <else>
+                <echo message="*** No working revision found, or all revisions compile successfully ***"/>
+            </else>
+        </if>
+
+        <exec executable="git">
+            <arg value="checkout"/>
+            <arg value="-f"/>
+            <arg value="main"/>
+        </exec>
+
+        <exec executable="git">
+            <arg value="stash"/>
+            <arg value="list"/>
+            <redirector outputproperty="stash.list"/>
+        </exec>
+
+        <if>
+            <not><equals arg1="${stash.list}" arg2=""/></not>
+            <then>
+                <exec executable="git">
+                    <arg value="stash"/>
+                    <arg value="pop"/>
+                </exec>
+            </then>
+        </if>
+
+        <echo message="***** HISTORY COMPLETED *****"/>
+
+    </target>
+
+
+    <!-- 15. Env -->
+    <!-- осуществляет сборку и запуск программы в альтернативных окружениях -->
+    <target name="env" depends="build">
+        <echo message="***** ENV STARTED *****"/>
+
+        <echo message="ENV 1: Java=${env.java.home.1} Args=${env.java.args.1}"/>
+
+        <java fork="true"
+              jar="${ant.dir}/${jar.name}"
+              jvm="${env.java.home.1}/bin/java">
+            <jvmarg line="${env.java.args.1}"/>
+            <jvmarg value="-version"/>
+        </java>
+
+        <echo message="ENV 2: Java=${env.java.home.2} Args=${env.java.args.2}"/>
+
+        <java fork="true"
+              jar="${ant.dir}/${jar.name}"
+              jvm="${env.java.home.2}/bin/java">
+            <jvmarg line="${env.java.args.2}"/>
+            <jvmarg value="-version"/>
+        </java>
+
+        <echo message="***** ENV COMPLETED *****"/>
+    </target>
+
+</project>

@@ -1,0 +1,11 @@
+.idea/
+.gradle/
+build/
+*.iml
+ant/build/
+ant/history/
+.svn
+history/
+*.class
+*.jar
+.DS_Store

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Стартовая страница</title>
+    <h:outputStylesheet library="css" name="index.css" />
+    <h:outputScript library="js" name="clock.js" target="body" />
+    <h:outputScript>
+        var initialServerTimestamp = #{timeBean.serverTimestamp};
+    </h:outputScript>
+</h:head>
+
+<h:body onload="startAnalogClock(initialServerTimestamp)">
+    <div class="page-container">
+        <div class="header">
+            Косогова Мария Александровна <br/>
+            Группа P3206 <br/>
+            Вариант 789143
+        </div>
+
+        <div class="clock-container">
+            <div class="clock">
+                <div class="number n12">12</div>
+                <div class="number n3">3</div>
+                <div class="number n6">6</div>
+                <div class="number n9">9</div>
+
+                <div class="hour">
+                    <div class="hr" id="hr">
+                </div>
+                </div>
+                <div class="min">
+                    <div class="mn" id="mn">
+                    </div>
+                </div>
+                <div class="sec">
+                    <div class="sc" id="sc">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h:form id="clockForm" prependId="false">
+                <h:panelGroup id="serverTimeBlock">
+                    <div class="server-info">
+                        <span id="currentDateText">
+                    </span><br/>
+                        <span id="currentTimeText">
+                    </span>
+                        <h:outputText id="serverTimestampText" value="#{timeBean.serverTimestamp}" style="display:none" />
+                    </div>
+                </h:panelGroup>
+
+                <p:poll interval="5" listener="#{timeBean.update}" update="serverTimeBlock"
+                        oncomplete="updateClockFromServer()" />
+            </h:form>
+        </div>
+
+        <div class="link-container">
+            <h:button styleClass="main-button" value="Главная страница" outcome="main" />
+        </div>
+    </div>
+
+    <footer id="footer">
+        Университет ИТМО, ФПиКТ, 2025
+    </footer>
+</h:body>
+</html>

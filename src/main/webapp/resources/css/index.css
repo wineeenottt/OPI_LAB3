@@ -1,0 +1,207 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background: url("#{resource['images/indexbc.jpg']}") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 40px 20px;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+    padding-top: 0;
+    margin: 0 auto;
+}
+
+.header {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+    padding: 15px 20px;
+    background: rgba(15, 10, 30, 0.3);
+    backdrop-filter: blur(12px);
+    border-radius: 13px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid rgba(65, 30, 120, 0.4);
+}
+
+.clock-container {
+    position: relative;
+}
+
+.clock {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    background: rgba(10, 5, 20, 0.3);
+    backdrop-filter: blur(12px);
+    border: 2px solid rgba(108, 92, 231, 0.3);
+    border-radius: 50%;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.number {
+    position: absolute;
+    font-size: 18px;
+    font-weight: 800;
+    color: #f0f0ff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.n12 { top: 15px; left: 50%; transform: translateX(-50%); }
+.n3  { top: 50%; right: 15px; transform: translateY(-50%); }
+.n6  { bottom: 15px; left: 50%; transform: translateX(-50%); }
+.n9  { top: 50%; left: 15px; transform: translateY(-50%); }
+
+.clock::before {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    background: #E17055;
+    border-radius: 50%;
+    z-index: 10000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px rgba(225, 112, 85, 0.6);
+}
+
+.clock .hour,
+.clock .min,
+.clock .sec {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+}
+
+.hr::before {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 60px;
+    background: #6C5CE7;
+    border-radius: 4px 4px 0 0;
+    top: -60px;
+    left: -3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.mn::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 80px;
+    background: #74B9FF;
+    border-radius: 3px 3px 0 0;
+    top: -80px;
+    left: -2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.sc::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: #A29BFE;
+    border-radius: 2px 2px 0 0;
+    top: -100px;
+    left: -1px;
+    box-shadow: 0 0 8px rgba(225, 112, 85, 0.7);
+}
+
+.info-panel {
+    background: rgba(15, 10, 30, 0.35);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: #f5f5ff;
+    box-sizing: border-box;
+    font-weight: 600;
+    align-items: center;
+    border: 1px solid rgba(108, 92, 231, 0.25);
+}
+
+.server-info {
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.link-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.main-button {
+    padding: 12px 28px;
+    background: rgba(108, 92, 231, 0.85);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    min-width: 180px;
+    transition: all 0.25s ease;
+}
+
+.main-button:hover {
+    background: #6C5CE7;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+}
+
+.main-button:active {
+    transform: translateY(0);
+    background: #5A4BB5;
+}
+
+#footer {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    color: rgba(230, 230, 255, 0.85);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
